@@ -106,8 +106,7 @@ public class PriorityQueue2011<Key extends Comparable<Key>> extends AbstractQueu
 	/**
 	 * Removes a minimum key and returns its associated index.
 	 * 
-	 * @return an index associated with a minimum key
-	 * @throws NoSuchElementException if this priority queue is empty
+	 * @return the minimum key to be removed
 	 */
 	@Override
 	public Key poll() {
@@ -119,6 +118,17 @@ public class PriorityQueue2011<Key extends Comparable<Key>> extends AbstractQueu
 		assert min == pq[size + 1];
 		qp[min] = -1; // delete
 		return keys[min];
+	}
+	
+	/**
+	 * Removes a single instance of the specified element from this queue, if it is present.
+	 * 
+	 * @return true if removal was successful
+	 * @return false if key does not exist
+	 */
+	public boolean remove(Key key) {
+		//TODO
+		return false;
 	}
 
 
