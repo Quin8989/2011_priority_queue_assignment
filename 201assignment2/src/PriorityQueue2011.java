@@ -204,13 +204,14 @@ public class PriorityQueue2011<Key> extends AbstractQueue<Key> {
 	 * @param args the command-line arguments
 	 */
 	public static void main(String[] args) {
-		String[] items = { "sometimes", "I", "Question", "my", "existence", "but", "otherwise", "i'm", "fine"};
+		String[] items = { "123", "1234567", "1234", "1", "12345", "123456",  "12", "12345678"};
 		PriorityQueue2011<String> pq = new PriorityQueue2011<String>();
 		for(String i : items) {
+			System.out.println(i);
 			pq.offer(i);
 		}
-		
-		for(int k = 0 ; k < pq.size(); k++) {
+		System.out.println(" ");
+		for(int k = 0 ; k < items.length; k++) {
 			System.out.println(pq.poll());
 		}
 	}
