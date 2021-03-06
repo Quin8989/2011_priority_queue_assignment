@@ -109,23 +109,18 @@ public class PriorityQueue2011<Key extends Comparable<Key>> extends AbstractQueu
 	 * @return an index associated with a minimum key
 	 * @throws NoSuchElementException if this priority queue is empty
 	 */
-	public int delMin() {
+	@Override
+	public Key poll() {
 		if (size == 0)
-			throw new NoSuchElementException("Priority queue underflow");
+			return null;
 		int min = pq[1];
 		exch(1, size--);
 		sink(1);
 		assert min == pq[size + 1];
 		qp[min] = -1; // delete
-		keys[min] = null; // to help with garbage collection
-		return min;
+		return keys[min];
 	}
 
-	@Override
-	public Key poll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	/**
 	 * Returns the key associated with index {@code i}.
@@ -293,8 +288,8 @@ public class PriorityQueue2011<Key extends Comparable<Key>> extends AbstractQueu
 
 		// delete and print each key
 		while (!PQ.isEmpty()) {
-			int i = PQ.delMin();
-			System.out.println(i + " " + strings[i]);
+			int i = PQ.minIndex();
+			System.out.println(i + " " +PQ.poll());
 		}
 		System.out.println();
 
@@ -308,7 +303,7 @@ public class PriorityQueue2011<Key extends Comparable<Key>> extends AbstractQueu
 			System.out.println(i + " " + strings[i]);
 		}
 		while (!PQ.isEmpty()) {
-			PQ.delMin();
+			PQ.poll();
 		}
 
 	}
