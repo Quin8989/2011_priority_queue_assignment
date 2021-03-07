@@ -13,6 +13,7 @@ public class PQSort {
         for(int k = 0 ; k < a.length; k++) {
             System.out.println(pQueue.poll());
         }
+        System.out.println("");
         
     }
     
@@ -28,16 +29,6 @@ public class PQSort {
             System.out.println(pQueue.poll());
         }
         
-    }
-    public static void main(String[] args) {
-        Integer[] arr = {1, 0, 3, 233333, 6, 5};
-        String[] items = { "100", "300", "200", "500", "500", "1000"}; 
-        heapSort(arr);
-        heapSort(items);
-        heapSort2011(arr);
-        heapSort2011(items);
         
     }
-
-
 }
