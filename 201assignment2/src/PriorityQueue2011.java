@@ -12,15 +12,15 @@ public class PriorityQueue2011<Key> extends AbstractQueue<Key> {
 
 	/**
 	 * Initializes an empty priority queue with the given initial capacity.
-	 *
-	 * @param initCapacity the initial capacity of this priority queue
 	 */
 	public PriorityQueue2011() {
 		pq = (Key[]) new Object[15];
 		size = 0;
 	}
 
-	// resize the underlying array to have the given capacity
+	/* resize the underlying array to have the given capacity
+	 * @param capacity is the size of the new array
+	 */
 	private void resize(int capacity) {
 		assert capacity > size;
 		Key[] temp = (Key[]) new Object[capacity];
@@ -44,7 +44,7 @@ public class PriorityQueue2011<Key> extends AbstractQueue<Key> {
 	 * Adds a new key to this priority queue.
 	 *
 	 * @param x the key to add to this priority queue
-	 * @return
+	 * @return returns whether x has been successfully added
 	 */
 	@Override
 	public boolean add(Key x) {
@@ -150,18 +150,22 @@ public class PriorityQueue2011<Key> extends AbstractQueue<Key> {
 		
 	}
 	
-	
+	/**
+	 * outputs the array as a tree
+	 *
+	 * @return String representation of tree
+	 */
 	public String toTree()
     {
-        int height = (int)(Math.log(size-1) / Math.log(2)); 
-        StringBuilder sb = new StringBuilder();
+        int h = (int)(Math.log(size-1) / Math.log(2)); 
+        StringBuilder tree_string = new StringBuilder();
         //Formatter fmt = new Formatter(sb);
         Key[] arry = (Key[]) this.pq;
         int padding = 0;
         int index = 1; 
-        for (int i = 0; i <= height; i++) {
+        for (int i = 0; i <= h; i++) {
             int leftPadding = 0; 
-            for(int p = 0; p  <= height - i; p++)
+            for(int p = 0; p  <= h - i; p++)
             {
                 leftPadding += (int) Math.ceil(Math.pow(2, p));
             }
@@ -174,31 +178,31 @@ public class PriorityQueue2011<Key> extends AbstractQueue<Key> {
                 if(j > 1 && i >= 0)
                 {
                     if(i == 0){ // when at lvl 0
-                    sb.append(String.format(" %"+leftPadding+"s", arry[index].toString()));
+                    tree_string.append(String.format(" %"+leftPadding+"s", arry[index].toString()));
                     }
                     else
                     {
-                        sb.append(String.format(" %"+padding+"s", arry[index].toString()));
+                        tree_string.append(String.format(" %"+padding+"s", arry[index].toString()));
                     }
                 }
                 else
                 {
-                    if(i == height){ // when at lvl max
-                        sb.append(String.format("%s", arry[index].toString()));
+                    if(i == h){ // when at lvl max
+                        tree_string.append(String.format("%s", arry[index].toString()));
                         }
                     else{
-                    sb.append(String.format(" %"+leftPadding+"s", arry[index].toString()));
+                    tree_string.append(String.format(" %"+leftPadding+"s", arry[index].toString()));
                     }
                 } 
 
                 j++;
                 index++; 
             }
-            sb.append('\n');
+            tree_string.append('\n');
             padding = leftPadding; 
 
         }
-        return sb.toString();
+        return tree_string.toString();
     }
 
 		
@@ -206,13 +210,13 @@ public class PriorityQueue2011<Key> extends AbstractQueue<Key> {
 	/***************************************************************************
 	 * Helper functions to restore the heap invariant.
 	 ***************************************************************************/
-
 	private void swim(Integer k) {	
 		while (k > 1 && greater(k / 2, k)) {
 			exch(k, k / 2);
 			k = k / 2;
 		}
 	}
+	
 
 	private void sink(Integer k) {
 		while (2 * k <= size) {
