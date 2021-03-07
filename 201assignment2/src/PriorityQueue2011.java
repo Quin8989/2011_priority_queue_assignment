@@ -17,7 +17,6 @@ public class PriorityQueue2011<Key> extends AbstractQueue<Key> {
 		pq = (Key[]) new Object[15];
 		size = 0;
 	}
-
 	/*
 	 * resize the underlying array to have the given capacity
 	 * 
@@ -204,12 +203,13 @@ public class PriorityQueue2011<Key> extends AbstractQueue<Key> {
 	 * Wayne, source: https://algs4.cs.princeton.edu/24pq/MaxPQ.java.html
 	 ************************************************************************/
 	
-	private void swim(Integer k) {
+	private void swim(Integer k) {	
 		while (k > 1 && greater(k / 2, k)) {
 			exch(k, k / 2);
 			k = k / 2;
 		}
 	}
+	
 
 	private void sink(Integer k) {
 		while (2 * k <= size) {
