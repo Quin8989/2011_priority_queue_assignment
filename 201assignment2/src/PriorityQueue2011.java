@@ -4,6 +4,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+
 public class PriorityQueue2011<Key> extends AbstractQueue<Key> {
 	private Key[] pq; // store items at indices 1 to n
 	private int size; // number of items on priority queue
@@ -56,6 +57,7 @@ public class PriorityQueue2011<Key> extends AbstractQueue<Key> {
 		swim(size);
 		assert isMinHeap();
 		return true;
+
 	}
 
 	/**
@@ -126,20 +128,95 @@ public class PriorityQueue2011<Key> extends AbstractQueue<Key> {
 		return size;
 	}
 
+	/**
+	 * Describes contents of PQ array in string form
+	 *
+	 * @return String representation of PQ array
+	 */
+	@Override
+	public String toString(){ 
+		if (size == 0)
+			return "[]";
+		StringBuffer sb = new StringBuffer();
+		sb.append("[");
+		for (int i = 1 ; i < pq.length - 1 ; i++){
+			if( i == (pq.length - 2)) {
+				sb.append(pq[i]);
+				return sb.append(']').toString();
+			} else {
+			sb.append(pq[i]);
+			sb.append(',').append(' ');
+		}} return null;
+		
+	}
+	
+	
+	public String toTree()
+    {
+        int height = (int)(Math.log(size-1) / Math.log(2)); 
+        StringBuilder sb = new StringBuilder();
+        //Formatter fmt = new Formatter(sb);
+        Key[] arry = (Key[]) this.pq;
+        int padding = 0;
+        int index = 1; 
+        for (int i = 0; i <= height; i++) {
+            int leftPadding = 0; 
+            for(int p = 0; p  <= height - i; p++)
+            {
+                leftPadding += (int) Math.ceil(Math.pow(2, p));
+            }
+            int j = 1; 
+            while( j <= Math.pow(2, i))
+            {
+                    if(index > this.size) 
+                    break;
+
+                if(j > 1 && i >= 0)
+                {
+                    if(i == 0){ // when at lvl 0
+                    sb.append(String.format(" %"+leftPadding+"s", arry[index].toString()));
+                    }
+                    else
+                    {
+                        sb.append(String.format(" %"+padding+"s", arry[index].toString()));
+                    }
+                }
+                else
+                {
+                    if(i == height){ // when at lvl max
+                        sb.append(String.format("%s", arry[index].toString()));
+                        }
+                    else{
+                    sb.append(String.format(" %"+leftPadding+"s", arry[index].toString()));
+                    }
+                } 
+
+                j++;
+                index++; 
+            }
+            sb.append('\n');
+            padding = leftPadding; 
+
+        }
+        return sb.toString();
+    }
+
+		
+
 	/***************************************************************************
 	 * Helper functions to restore the heap invariant.
 	 ***************************************************************************/
 
-	private void swim(int k) {
+	private void swim(Integer k) {	
 		while (k > 1 && greater(k / 2, k)) {
 			exch(k, k / 2);
 			k = k / 2;
 		}
 	}
 
-	private void sink(int k) {
+	private void sink(Integer k) {
 		while (2 * k <= size) {
-			int j = 2 * k;
+			Integer j = 2 * k;
 			if (j < size && greater(j, j + 1))
 				j++;
 			if (!greater(k, j))
@@ -152,7 +229,8 @@ public class PriorityQueue2011<Key> extends AbstractQueue<Key> {
 	/***************************************************************************
 	 * Helper functions for compares and swaps.
 	 ***************************************************************************/
-	private boolean greater(int i, int j) {
+	private boolean greater(Integer i, Integer j) {
+		
 		if (comparator == null) {
 			return ((Comparable<Key>) pq[i]).compareTo(pq[j]) > 0;
 		} else {
@@ -160,7 +238,7 @@ public class PriorityQueue2011<Key> extends AbstractQueue<Key> {
 		}
 	}
 
-	private void exch(int i, int j) {
+	private void exch(Integer i, Integer j) {
 		Key swap = pq[i];
 		pq[i] = pq[j];
 		pq[j] = swap;
@@ -182,11 +260,11 @@ public class PriorityQueue2011<Key> extends AbstractQueue<Key> {
 	}
 
 	// is subtree of pq[1..n] rooted at k a min heap?
-	private boolean isMinHeapOrdered(int k) {
+	private boolean isMinHeapOrdered(Integer k) {
 		if (k > size)
 			return true;
-		int left = 2 * k;
-		int right = 2 * k + 1;
+		Integer left = 2 * k;
+		Integer right = 2 * k + 1;
 		if (left <= size && greater(k, left))
 			return false;
 		if (right <= size && greater(k, right))
@@ -204,14 +282,17 @@ public class PriorityQueue2011<Key> extends AbstractQueue<Key> {
 	 * @param args the command-line arguments
 	 */
 	public static void main(String[] args) {
-		String[] items = { "123", "1234567", "1234", "1", "12345", "123456",  "12", "12345678"};
-		PriorityQueue2011<String> pq = new PriorityQueue2011<String>();
-		for(String i : items) {
+		Integer[] items = {12,11,10,9,8,7,6,5,4,3,2,1,null};
+		PriorityQueue2011<Integer> pq = new PriorityQueue2011<Integer>();
+		for (Integer i : items) {
 			System.out.println(i);
 			pq.offer(i);
 		}
 		System.out.println(" ");
-		for(int k = 0 ; k < items.length; k++) {
+		System.out.println(pq.toString());
+		System.out.println(pq.toTree());
+		
+		for (int k = 0; k < items.length; k++) {
 			System.out.println(pq.poll());
 		}
 	}
